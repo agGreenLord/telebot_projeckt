@@ -1,9 +1,8 @@
-import logging
-import telebot
 
+import telebot
+from telebot import types
 
 TOKEN = "5827639233:AAFoJXxbXJ9oWtsL9nIuVbaOEK35apz79AI"
-logging.basicConfig(level=logging.INFO)
 
 bot = telebot.TeleBot(TOKEN)
 
@@ -14,6 +13,15 @@ def start(message):
     "Электроника" 
     "Крупная бытовая техника" 
     "Проводка""")
+
+# Попытался сделать кнопку но она пока не работает
+# @bot.message_handler(commmand=['start'])
+# def button_message(message):
+#     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+#     item1 = types.KeyboardButton("Электроника")
+#     markup.add(item1)
+#     bot.send_message(message.chat.id, 'Выберите что вам надо', reply_markup=markup)
+
 
 @bot.message_handler(content_types=['text'])
 def send_massage(message):
@@ -28,5 +36,5 @@ def send_massage(message):
 
 
 
-bot.polling()
+bot.infinity_polling()
 
