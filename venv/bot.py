@@ -6,18 +6,22 @@ TOKEN = "5827639233:AAFoJXxbXJ9oWtsL9nIuVbaOEK35apz79AI"
 
 bot = telebot.TeleBot(TOKEN)
 
+# @bot.message_handler(commands=['start'])
+# def start(message):
+#     bot.send_message(message.chat.id, """
+#     Бот позволяет оставить заявку на ремонт, диагностику электроники, бытовой техники, проводки. С чем работать будем?
+#     "Электроника"
+#     "Крупная бытовая техника"
+#     "Проводка""")
+
+# Попытался сделать кнопку
 @bot.message_handler(commands=['start'])
 def start(message):
     bot.send_message(message.chat.id, """
-    Бот позволяет оставить заявку на ремонт, диагностику электроники, бытовой техники, проводки. С чем работать будем?
-    "Электроника" 
-    "Крупная бытовая техника" 
-    "Проводка""")
-
-# Попытался сделать кнопку но она пока не работает
-@bot.message_handler(commands=['button'])
-def start(message):
-
+        Бот позволяет оставить заявку на ремонт, диагностику электроники, бытовой техники, проводки. С чем работать будем?
+        "Электроника" 
+        "Крупная бытовая техника" 
+        "Проводка""")
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     btn1 = types.KeyboardButton("Электроника")
     btn2 = types.KeyboardButton('Бытовая техника')
@@ -29,11 +33,11 @@ def start(message):
 @bot.message_handler(content_types=['text'])
 def send_massage(message):
     if message.text.lower() == 'электроника':
-         bot.send_message(message.chat.id, 'Когда вам было бы удобно, чтобы с вами связался мастер?')
+         bot.send_message(message.chat.id, 'Пожалуйста оставьте свой номер телефона, чтобы мастер мог с вами связаться')
     elif message.text.lower() == 'бытовая техника':
-        bot.send_message(message.chat.id, 'Когда вам было бы удобно, чтобы с вами связался мастер?')
+        bot.send_message(message.chat.id, 'Пожалуйста оставьте свой номер телефона, чтобы мастер мог с вами связаться')
     elif message.text.lower() == 'проводка':
-        bot.send_message(message.chat.id, 'Когда вам было бы удобно, чтобы с вами связался мастер?')
+        bot.send_message(message.chat.id, 'Пожалуйста оставьте свой номер телефона, чтобы мастер мог с вами связаться')
     else:
         bot.send_message(message.chat.id, 'Я вас не понимаю, пожалуйста напишите один из предложенных вариантов')
 
