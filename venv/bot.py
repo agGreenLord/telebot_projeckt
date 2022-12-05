@@ -15,12 +15,15 @@ def start(message):
     "Проводка""")
 
 # Попытался сделать кнопку но она пока не работает
-# @bot.message_handler(commmand=['start'])
-# def button_message(message):
-#     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-#     item1 = types.KeyboardButton("Электроника")
-#     markup.add(item1)
-#     bot.send_message(message.chat.id, 'Выберите что вам надо', reply_markup=markup)
+@bot.message_handler(commands=['button'])
+def start(message):
+
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    btn1 = types.KeyboardButton("Электроника")
+    btn2 = types.KeyboardButton('Бытовая техника')
+    btn3 = types.KeyboardButton('Проводка')
+    markup.add(btn1, btn2, btn3)
+    bot.send_message(message.from_user.id, "Выберете что вам необходимо починить", reply_markup=markup)
 
 
 @bot.message_handler(content_types=['text'])
