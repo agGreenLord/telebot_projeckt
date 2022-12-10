@@ -18,7 +18,7 @@ def start(message):
         /oder - оставить заявку на звонок мастера""", reply_markup=markup)
 @bot.message_handler(content_types=['text'])
 def get_message(message):
-    if message.text.lower() == 'oder':
+    if message.text.lower() == 'oder' or message.text.lower() == '/oder':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         btn1 = types.KeyboardButton("Электроника")
         btn2 = types.KeyboardButton('Бытовая техника')
@@ -27,14 +27,11 @@ def get_message(message):
         bot.send_message(message.from_user.id, "Выберете что вам необходимо починить", reply_markup=markup)
 
         if message.text.lower() == 'электроника':
-            bot.send_message(message.from_user.id,
-                                'Пожалуйста, оставьте свой номер телефона, чтобы мастер смог с вами связаться, узнать о проблеме и назначить удобное время встречи')
+            bot.send_message(message.from_user.id, 'Пожалуйста, оставьте свой номер телефона, чтобы мастер смог с вами связаться, узнать о проблеме и назначить удобное время встречи')
         elif message.text.lower() == 'бытовая техника':
-            bot.send_message(message.from_user.id,
-                                 'Пожалуйста, оставьте свой номер телефона, чтобы мастер смог с вами связаться, узнать о проблеме и назначить удобное время встречи')
+            bot.send_message(message.from_user.id, 'Пожалуйста, оставьте свой номер телефона, чтобы мастер смог с вами связаться, узнать о проблеме и назначить удобное время встречи')
         elif message.text.lower() == 'проводка':
-            bot.send_message(message.from_user.id,
-                                 'Пожалуйста, оставьте свой номер телефона, чтобы мастер смог с вами связаться, узнать о проблеме и назначить удобное время встречи')
+            bot.send_message(message.from_user.id, 'Пожалуйста, оставьте свой номер телефона, чтобы мастер смог с вами связаться, узнать о проблеме и назначить удобное время встречи')
 
 
 
