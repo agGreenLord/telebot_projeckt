@@ -2,6 +2,7 @@ import telebot
 from telebot import types
 # from config.config import BOT_TOKEN
 from config import BOT_TOKEN, HELLO_MESSAGE
+from config.messages import ORDER_MESSAGE
 
 bot = telebot.TeleBot(BOT_TOKEN)
 
@@ -39,13 +40,13 @@ def get_message(message):
     #Выбор проблемы
     elif message.text.lower() == 'электроника':
         bot.send_message(message.from_user.id,
-                'Пожалуйста, оставьте свой номер телефона, чтобы мастер смог с вами связаться, узнать о проблеме и назначить удобное время встречи')
+                ORDER_MESSAGE)
     elif message.text.lower() == 'бытовая техника':
         bot.send_message(message.from_user.id,
-                'Пожалуйста, оставьте свой номер телефона, чтобы мастер смог с вами связаться, узнать о проблеме и назначить удобное время встречи')
+                ORDER_MESSAGE)
     elif message.text.lower() == 'проводка':
         bot.send_message(message.from_user.id,
-                'Пожалуйста, оставьте свой номер телефона, чтобы мастер смог с вами связаться, узнать о проблеме и назначить удобное время встречи')
+                ORDER_MESSAGE)
 
 
 
