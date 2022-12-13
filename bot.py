@@ -1,8 +1,9 @@
 import telebot
 from telebot import types
+# from config.config import BOT_TOKEN
+from config import BOT_TOKEN, HELLO_MESSAGE
 
-TOKEN = "5827639233:AAFoJXxbXJ9oWtsL9nIuVbaOEK35apz79AI"
-bot = telebot.TeleBot(TOKEN)
+bot = telebot.TeleBot(BOT_TOKEN)
 
 print('runned')
 
@@ -12,17 +13,14 @@ def start(message):
     btn1 = types.KeyboardButton('Info')
     btn2 = types.KeyboardButton('Oder')
     markup.add(btn1, btn2)
-    bot.send_message(message.from_user.id, """Привет! Я бот, который позволяет оставить заявку мастеру на починку электроники, бытовой техники или проводки.
-        Вы можете:
-        /info - узнать информацию о мастере
-        /oder - оставить заявку на звонок мастера""", reply_markup=markup)
+    bot.send_message(message.from_user.id, HELLO_MESSAGE, reply_markup=markup)
 
 
 
 
 @bot.message_handler(content_types=['text'])
 def get_message(message):
-    #Блок ODER
+    #Блок ORDER
     if message.text.lower() == 'oder' or message.text == '/oder':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         btn1 = types.KeyboardButton("Электроника")
