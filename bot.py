@@ -8,6 +8,7 @@ bot = telebot.TeleBot(BOT_TOKEN)
 
 print('runned')
 
+
 @bot.message_handler(commands=['start'])
 def start(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
