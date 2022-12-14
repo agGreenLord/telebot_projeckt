@@ -30,6 +30,8 @@ def get_message(message):
         markup.add(btn1, btn2, btn3)
         bot.send_message(message.from_user.id, "Выберете что вам необходимо починить", reply_markup=markup)
 
+
+
     #Блок INFO
     elif message.text.lower() == 'info' or message.text == '/info':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
