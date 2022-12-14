@@ -1,7 +1,7 @@
 import telebot
 from telebot import types
 from config import BOT_TOKEN
-from mocked_data import HELLO_MESSAGE, ORDER_MESSAGE, INFO_MESSAGE
+from mocked_data import HELLO_MESSAGE, ORDER_MESSAGE, INFO_MESSAGE, PROBLEMS_MESSAGE, OTHER_MESSAGE
 
 bot = telebot.TeleBot(BOT_TOKEN)
 
@@ -16,8 +16,6 @@ def start(message):
     bot.send_message(message.from_user.id, HELLO_MESSAGE, reply_markup=markup)
 
 
-
-
 @bot.message_handler(content_types=['text'])
 def get_message(message):
     user_id = message.from_user.id
@@ -29,7 +27,7 @@ def get_message(message):
     match get_message_text:
         #Блок ORDER
         case 'order' | '/order':
-            send_message_text = ORDER_MESSAGE
+            send_message_text = PROBLEMS_MESSAGE
             btn1 = types.KeyboardButton('Электроника')
             btn2 = types.KeyboardButton('Бытовая техника')
             btn3 = types.KeyboardButton('Проводка')
@@ -40,12 +38,14 @@ def get_message(message):
             btn1 = types.KeyboardButton('Order')
             markup.add(btn1)
         #Выбор проблемы
-        case ['электроника']:
+        case 'электроника':
             send_message_text = ORDER_MESSAGE
-        case ['бытовая техника']:
+        case 'бытовая техника':
             send_message_text = ORDER_MESSAGE
-        case ['проводка']:
+        case 'проводка':
             send_message_text = ORDER_MESSAGE
+        case _:
+            send_message_text = OTHER_MESSAGE
 
     bot.send_message(user_id, send_message_text, reply_markup = markup)
 
