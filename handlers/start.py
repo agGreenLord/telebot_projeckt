@@ -1,11 +1,12 @@
 import telebot
 from telebot import types
 from config import BOT_TOKEN
+from Stage import Stor
 from mocked_data import HELLO_MESSAGE, ORDER_MESSAGE, INFO_MESSAGE, PROBLEMS_MESSAGE, OTHER_MESSAGE
 
 bot = telebot.TeleBot(BOT_TOKEN)
 
-
+add_data = Stor()
 @bot.message_handler(commands=['start'])
 def start(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
