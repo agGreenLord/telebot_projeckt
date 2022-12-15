@@ -45,9 +45,14 @@ def get_message(message):
         case 'проводка':
             send_message_text = ORDER_MESSAGE
         case _:
-            send_message_text = OTHER_MESSAGE
+            if get_message_text.isdigit() and get_message_text.startswith("351") and len(get_message_text)==12:
+                send_message_text = 'cпасибо, мастер скоро с вами свяжется'
+            elif get_message_text.isalnum() or len(get_message_text)!=12:
+                send_message_text = 'номер введен неверно, попробуйте еще'
+            else:
+                send_message_text = OTHER_MESSAGE
 
-    bot.send_message(user_id, send_message_text, reply_markup = markup)
+    bot.send_message(user_id, send_message_text, reply_markup=markup)
 
 bot.infinity_polling()
 
