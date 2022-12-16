@@ -1,13 +1,12 @@
 import telebot
 from telebot import types
 from config import BOT_TOKEN
-from Stage import Store
-from mocked_data import HELLO_MESSAGE, ORDER_MESSAGE, INFO_MESSAGE, PROBLEMS_MESSAGE, OTHER_MESSAGE
+from state import Store, Record, ClientData
+from mocked_data import HELLO_MESSAGE, ORDER_MESSAGE, INFO_MESSAGE, PROBLEMS_MESSAGE, OTHER_MESSAGE, STAGES
 
 bot = telebot.TeleBot(BOT_TOKEN)
+user_storage = Store()
 
-
-add_data = Stor()
 @bot.message_handler(commands=['start'])
 def start(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -15,6 +14,11 @@ def start(message):
     btn2 = types.KeyboardButton('Order')
     markup.add(btn1, btn2)
     bot.send_message(message.from_user.id, HELLO_MESSAGE, reply_markup=markup)
+
+    empty_client_data = ClientData('', '')
+    record = Record(message.from_user.id, empty_client_data, STAGES[0])
+    user_storage.add_new_record(record)
+    print(user_storage.storage)
 
 @bot.message_handler(content_types=['text'])
 def get_message(message):
