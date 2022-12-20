@@ -8,6 +8,8 @@ from mocked_data import HELLO_MESSAGE, ORDER_MESSAGE, INFO_MESSAGE, PROBLEMS_MES
 
 bot = telebot.TeleBot(BOT_TOKEN)
 user_storage = Store()
+admin_id = ADMIN_CHAT_TOKEN
+
 
 @bot.message_handler(commands=['start'])
 def start(message):
@@ -55,3 +57,6 @@ def get_message(message):
                 send_message_text = OTHER_MESSAGE
     bot.send_message(user_id, send_message_text, reply_markup=markup)
 
+@bot.message_handler(commands=['admin'])
+def admin(message):
+    bot.send_message(admin_id, text='ghbdtnAoifhcn;zx')

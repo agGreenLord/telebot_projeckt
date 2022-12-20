@@ -92,12 +92,3 @@ class Store:
 
 
 
-
-man = Record(chat_id=445980291, data=ClientData(phone_number='', selected_service=''), current_stage='start')
-man2 = Record(chat_id=555980291, data=ClientData(phone_number='', selected_service=''), current_stage='start')
-stor = Store()
-stor.add_new_record(man)
-stor.add_new_record(man2)
-print(stor.storage)
-stor.update_stage(445980291, ';jtrAFCSF')
-print(stor.storage)
