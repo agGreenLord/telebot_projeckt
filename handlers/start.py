@@ -1,8 +1,10 @@
 import telebot
 from telebot import types
-from config import BOT_TOKEN
+
+from config import BOT_TOKEN, ADMIN_CHAT_TOKEN
 from state import Store, Record, ClientData
 from mocked_data import HELLO_MESSAGE, ORDER_MESSAGE, INFO_MESSAGE, PROBLEMS_MESSAGE, OTHER_MESSAGE, STAGES
+
 
 bot = telebot.TeleBot(BOT_TOKEN)
 user_storage = Store()
@@ -24,7 +26,7 @@ def start(message):
 def get_message(message):
     user_id = message.from_user.id
     get_message_text = message.text.lower()
-    markup = types.ReplyKeyboardMarkup(resize_keyboard = True)
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     # Надо почитать про утечку памяти и как правильно с ней работать
     send_message_text = ' '
 
@@ -42,16 +44,12 @@ def get_message(message):
             btn1 = types.KeyboardButton('Order')
             markup.add(btn1)
         #Выбор проблемы
-        case 'электроника':
-            send_message_text = ORDER_MESSAGE
-        case 'бытовая техника':
-            send_message_text = ORDER_MESSAGE
-        case 'проводка':
+        case 'электроника' | 'бытовая техника' | 'проводка':
             send_message_text = ORDER_MESSAGE
         case _:
             if get_message_text.isdigit() and get_message_text.startswith("351") and len(get_message_text)==12:
                 send_message_text = 'cпасибо, мастер скоро с вами свяжется'
-            elif get_message_text.isalnum() or len(get_message_text)!=12:
+            elif get_message_text.isalnum() or len(get_message_text) != 12:
                 send_message_text = 'номер введен неверно, попробуйте еще'
             else:
                 send_message_text = OTHER_MESSAGE
