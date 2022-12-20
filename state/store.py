@@ -58,7 +58,7 @@ class Store:
         return self._storage
 
     @storage.setter
-    def storage(self, value):
+    def storage(self, value: list) -> None:
         self._storage = value
 
     def add_new_record(self, record: Record) -> None:
@@ -70,19 +70,19 @@ class Store:
             if i_record.chat_id == our_chat_id:
                 return i_record
 
-    def delete_record(self, our_chat_id):
+    def delete_record(self, our_chat_id: int) -> None:
         print('get record')
         self.storage.remove(self.get_record_by_chat_id(our_chat_id))
 
-    def update_stage(self, our_chat_id, stage):
+    def update_stage(self, our_chat_id: int, stage: str) -> None:
         print('get record')
         self.get_record_by_chat_id(our_chat_id).current_stage = stage
 
-    def update_phone(self, our_chat_id, number):
+    def update_phone(self, our_chat_id: int, number: str) -> None:
         print('get record')
         self.get_record_by_chat_id(our_chat_id).data.phone_number = number
 
-    def update_service(self, our_chat_id, service):
+    def update_service(self, our_chat_id: int, service: str) -> None:
         print('get record')
         self.get_record_by_chat_id(our_chat_id).data.selected_service = service
 
