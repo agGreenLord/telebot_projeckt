@@ -1,3 +1,1 @@
 from .messages import HELLO_MESSAGE, ORDER_MESSAGE, INFO_MESSAGE, PROBLEMS_MESSAGE, OTHER_MESSAGE
-from .tip import STAGES_TYPES, SERVICE_TYPES
-from .read_yaml import cfg
