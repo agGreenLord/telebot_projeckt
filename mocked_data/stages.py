@@ -1,6 +1,5 @@
 import yaml
 
-
 with open('stages.yaml', 'r', encoding='utf-8') as read_yaml_file:
     cfg = yaml.safe_load(read_yaml_file)
 
@@ -15,3 +14,9 @@ STAGES = dict()
 for i_line in cfg:
     STAGES[i_line['name']] = i_line
 print(STAGES)
+
+SERVICE_TYPES = [
+    'Электроника',
+    'Бытовая техника',
+    'Проводка'
+]
