@@ -1,4 +1,4 @@
-hello_stage:
+-
     name: hello_stage
     message: |
         Привет! Я бот, который позволяет оставить заявку мастеру на починку электроники, бытовой техники или проводки.
@@ -12,7 +12,7 @@ hello_stage:
     buttons:
         -   Info
         -   Order
-choose_service_stage:
+-
     name: choose_service_stage
     message: |
         Выберете с каким типом проблемы будет работать мастер
@@ -23,7 +23,7 @@ choose_service_stage:
         - Электроника
         - Бытовая техника
         - Проводка
-get_phone_stage:
+-
     name: get_phone_stage
     message: |
         Пожалуйста, оставьте свой номер телефона, c кодом страны, без '+' и без пробелов (351000111222).
