@@ -7,7 +7,7 @@ with open('stages.yaml', 'r', encoding='utf-8') as read_yaml_file:
 #     STAGES[i_line] = i_line['name']
 
 
-STAGES_TYPES = [i_line['name'] for i_line in cfg]
+STAGES_TYPES: list[str] = [i_line['name'] for i_line in cfg]
 print(STAGES_TYPES)
 
 STAGES = dict()

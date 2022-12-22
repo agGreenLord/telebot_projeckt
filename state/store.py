@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from mocked_data import STAGES, SERVICE_TYPES
+from mocked_data import STAGES_TYPES, SERVICE_TYPES
 from typing import List
 
 
@@ -13,11 +13,11 @@ class ClientData:
 class RecordType:
     chat_id: str
     data: ClientData
-    current_stage: STAGES
+    current_stage: STAGES_TYPES
 
 
 class Record(RecordType):
-    def __init__(self, chat_id: str, data: ClientData, current_stage: STAGES) -> None:
+    def __init__(self, chat_id: str, data: ClientData, current_stage: STAGES_TYPES) -> None:
         self.chat_id = chat_id
         self.data = data
         self.current_stage = current_stage
@@ -31,7 +31,7 @@ class Record(RecordType):
         return self._data
 
     @property
-    def current_stage(self) -> STAGES:
+    def current_stage(self) -> STAGES_TYPES:
         return self._current_stage
 
     @chat_id.setter
@@ -43,7 +43,7 @@ class Record(RecordType):
         self._data = data
 
     @current_stage.setter
-    def current_stage(self, current_stage: STAGES) -> None:
+    def current_stage(self, current_stage: STAGES_TYPES) -> None:
         self._current_stage = current_stage
 
 
