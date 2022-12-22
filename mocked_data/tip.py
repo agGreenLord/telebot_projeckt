@@ -1,7 +1,7 @@
-STAGES = [
-    'start',
-    'choose_service_type',
-    'get_phone_number'
+STAGES_TYPES = [
+    'hello_stage',
+    'choose_service_stage',
+    'get_phone_stage'
 ]
 
 SERVICE_TYPES = [
@@ -9,3 +9,5 @@ SERVICE_TYPES = [
     'проводка',
     'бытовая техника'
 ]
+
+
