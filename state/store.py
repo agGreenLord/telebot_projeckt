@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from mocked_data import STAGES_TYPES, SERVICE_TYPES
+from mocked_data import StageList, SERVICE_TYPES
 from typing import List
 
 
@@ -13,11 +13,11 @@ class ClientData:
 class RecordType:
     chat_id: str
     data: ClientData
-    current_stage: STAGES_TYPES
+    current_stage: StageList
 
 
 class Record(RecordType):
-    def __init__(self, chat_id: str, data: ClientData, current_stage: STAGES_TYPES) -> None:
+    def __init__(self, chat_id: str, data: ClientData, current_stage: StageList) -> None:
         self.chat_id = chat_id
         self.data = data
         self.current_stage = current_stage
@@ -31,7 +31,7 @@ class Record(RecordType):
         return self._data
 
     @property
-    def current_stage(self) -> STAGES_TYPES:
+    def current_stage(self) -> StageList:
         return self._current_stage
 
     @chat_id.setter
@@ -43,7 +43,7 @@ class Record(RecordType):
         self._data = data
 
     @current_stage.setter
-    def current_stage(self, current_stage: STAGES_TYPES) -> None:
+    def current_stage(self, current_stage: StageList) -> None:
         self._current_stage = current_stage
 
 
@@ -71,8 +71,10 @@ class Store:
                 return i_record
 
     def delete_record(self, our_chat_id: int) -> None:
-        print('get record')
-        self.storage.remove(self.get_record_by_chat_id(our_chat_id))
+        tempRecord = self.get_record_by_chat_id(our_chat_id)
+        if tempRecord:
+            print('delete record: ', tempRecord.chat_id)
+            self.storage.remove(tempRecord)
 
     def update_stage(self, our_chat_id: int, stage: str) -> None:
         print('get record')

@@ -1,19 +1,21 @@
 import yaml
-
-with open('stages.yaml', 'r', encoding='utf-8') as read_yaml_file:
+with open('mocked_data/stages.yaml', 'r', encoding='utf-8') as read_yaml_file:
     cfg = yaml.safe_load(read_yaml_file)
 
-# for i_line in cfg:
-#     STAGES[i_line] = i_line['name']
 
+class StageList:
+    hello_stage = 'hello_stage'
+    choose_service_stage = 'choose_service_stage'
+    get_phone_stage = 'get_phone_stage'
 
-STAGES_TYPES: list[str] = [i_line['name'] for i_line in cfg]
-print(STAGES_TYPES)
 
 STAGES = dict()
-for i_line in cfg:
-    STAGES[i_line['name']] = i_line
-print(STAGES)
+
+for idx, stage in enumerate(cfg):
+    STAGES[stage['name']] = {'id': idx, **stage}
+
+# print(StageList)
+# print(STAGES['hello_stage'])
 
 SERVICE_TYPES = [
     'Электроника',
