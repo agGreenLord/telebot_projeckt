@@ -15,6 +15,14 @@
     buttons:
         -   Info
         -   Order
+
+-
+    name: info_stage
+    message: |
+        Здесь информация об Инженере
+    error_message: null
+    buttons:
+        - Order
 -
     name: choose_service_stage
     message: |
@@ -38,7 +46,7 @@
 -
     name: finish_stage
     message: |
-        ТЕСТОВОЕ СООБЩЕНИЕ-ПРОЩАНИЕ
+        Спасибо за заказ. Инженер скоро свяжется с вами!
     buttons: null
 
 

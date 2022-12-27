@@ -31,10 +31,18 @@ def send_staged_message(chat_id: str, income_message: str, storage: Store, bot):
             storage.update_stage(chat_id, StageList.hello_stage)
 
         case StageList.hello_stage:
-
             match income_message:
                 case 'info':
-                    message_to_send = 'У нас нет этого этапа'
+                    next_stage = STAGES[StageList.info_stage]
+                    message_to_send = next_stage['message']
+
+                    if next_stage['buttons']:
+                        for service in next_stage['buttons']:
+                            markup.add(types.KeyboardButton(service))
+                    else:
+                        markup = telebot.types.ReplyKeyboardRemove()
+
+                    storage.update_stage(chat_id, StageList.info_stage)
 
                 case 'order':
                     next_stage = STAGES[StageList.choose_service_stage]
@@ -53,6 +61,18 @@ def send_staged_message(chat_id: str, income_message: str, storage: Store, bot):
                     storage.update_stage(chat_id, StageList.start_stage)
                     send_staged_message(chat_id, storage, '/start')
                     is_error = True
+
+        case StageList.info_stage:
+            next_stage = STAGES[StageList.choose_service_stage]
+            message_to_send = next_stage['message']
+
+            if next_stage['buttons']:
+                for service in next_stage['buttons']:
+                    markup.add(types.KeyboardButton(service))
+            else:
+                markup = telebot.types.ReplyKeyboardRemove()
+
+            storage.update_stage(chat_id, StageList.choose_service_stage)
 
         case StageList.choose_service_stage:
 
