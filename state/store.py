@@ -5,6 +5,7 @@ from typing import List
 
 @dataclass
 class ClientData:
+    nick_name: str
     phone_number: str
     selected_service: SERVICE_TYPES
 

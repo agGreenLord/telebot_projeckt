@@ -1,3 +1,5 @@
+import re
+
 import telebot
 from telebot import types
 
@@ -17,7 +19,7 @@ def start(message):
     income_message_text = message.text.lower()
 
     user_storage.delete_record(chat_id)
-    empty_client_data = ClientData('', '')
+    empty_client_data = ClientData(message.from_user.username, '', '')
     record = Record(chat_id, empty_client_data, StageList.start_stage)
     user_storage.add_new_record(record)
 
@@ -73,6 +75,8 @@ def send_staged_message(chat_id: str, storage: Store, income_message: str):
                     if next_stage['buttons']:
                         for service in next_stage['buttons']:
                             markup.add(types.KeyboardButton(service))
+                    else:
+                        markup = telebot.types.ReplyKeyboardRemove()
 
                     user_storage.update_stage(chat_id, StageList.choose_service_stage)
 
@@ -99,42 +103,57 @@ def send_staged_message(chat_id: str, storage: Store, income_message: str):
                     user_storage.update_service(chat_id, income_message)
 
                 case _:
-                        bot.send_message(chat_id, message_to_send, reply_markup=markup)
-                        user_storage.update_stage(chat_id, StageList.start_stage)
-                        send_staged_message(chat_id, storage, '/start')
-                        is_error = True
+                    bot.send_message(chat_id, message_to_send, reply_markup=markup)
+                    user_storage.update_stage(chat_id, StageList.start_stage)
+                    send_staged_message(chat_id, storage, '/start')
+                    is_error = True
 
         case StageList.get_phone_stage:
 
             next_stage = STAGES[StageList.finish_stage]
-            message_to_send = next_stage['message']
 
-            if next_stage['buttons']:
-                for service in next_stage['buttons']:
-                    markup.add(types.KeyboardButton(service))
+            print(' 10 <= len(income_message) <= 1',  10 <= len(income_message) <= 12)
+            # print('re.findall(r"\A(1|8|9)[0-9]+", income_message)', re.findall(r"\A(1|8|9)[0-9]+", income_message))
+            # print('len(re.findall(r"\A(1|8|9)[0-9]+", income_message))', len(re.findall(r"\A(1|8|9)[0-9]+", income_message)))
+            # print('len(re.findall(r"\A(1|8|9)[0-9]+", income_message)) and 10 <= len(income_message) <= 12', len(re.findall(r"\A(1|8|9)[0-9]+", income_message)) and 10 <= len(income_message) <= 12)
 
-            user_storage.update_stage(chat_id, StageList.finish_stage)
+            if len(re.findall(r"^[0-9]+$", income_message)) and 10 <= len(income_message) <= 12:
+                message_to_send = next_stage['message']
+
+                if next_stage['buttons']:
+                    for service in next_stage['buttons']:
+                        markup.add(types.KeyboardButton(service))
+                else:
+                    markup = telebot.types.ReplyKeyboardRemove()
+
+                user_storage.update_stage(chat_id, StageList.finish_stage)
+                user_storage.update_phone(chat_id, income_message)
+                send_message_to_admin(chat_id, storage)
+            else:
+                message_to_send = "Номер не подходит\n" + current_stage['message']
 
         case StageList.finish_stage:
 
-            next_stage = STAGES[StageList.start_stage]
+            next_stage = STAGES[StageList.hello_stage]
             message_to_send = next_stage['message']
 
             if next_stage['buttons']:
                 for service in next_stage['buttons']:
                     markup.add(types.KeyboardButton(service))
+            else:
+                markup = telebot.types.ReplyKeyboardRemove()
 
-            user_storage.update_stage(chat_id, StageList.start_stage)
-            # TODO сделать валидацию номера телефона
-            #     match income_message:
-            #         case 'Электроника' | 'Бытовая техника' | 'Проводка':
-            #
-            #         case _:
-            #                 bot.send_message(chat_id, message_to_send, reply_markup=markup)
-            #                 user_storage.update_stage(chat_id, StageList.start_stage)
-            #                 send_staged_message(chat_id, storage, '/start')
-            #                 is_error = True
-            # TODO здесь надо оправить данные админам
+            user_storage.update_stage(chat_id, StageList.hello_stage)
 
     if not is_error:
-        bot.send_message(chat_id, message_to_send, reply_markup=markup)
+            bot.send_message(chat_id, message_to_send, reply_markup=markup)
+
+
+def send_message_to_admin(chat_id: str, storage: Store):
+    user_info = storage.get_record_by_chat_id(chat_id).data
+    message = "Новый заказ \nНик пользователя: @" \
+              + user_info.nick_name \
+              + "\nНомер телефона пользователя: " + user_info.phone_number \
+              + "\nВид услуги: " + user_info.selected_service
+    print('message', message)
+    bot.send_message(admin_id, text=message)
