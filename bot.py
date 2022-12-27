@@ -1,4 +1,4 @@
-from handlers.start import bot
+from handlers.main_handler import bot
 
 print('run')
 

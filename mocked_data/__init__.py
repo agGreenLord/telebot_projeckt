@@ -1,2 +1,2 @@
 from .messages import HELLO_MESSAGE, ORDER_MESSAGE, INFO_MESSAGE, PROBLEMS_MESSAGE, OTHER_MESSAGE
-from .types import STAGES, SERVICE_TYPES
+from .stages import STAGES, StageList, SERVICE_TYPES
